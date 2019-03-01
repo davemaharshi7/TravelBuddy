@@ -60,7 +60,7 @@ public class BaseActivity extends AppCompatActivity {
                         break;
                     case R.id.account_nav:
                         Log.i("matching", "matching inside1 deals" + checkedId);
-                        in = new Intent(getBaseContext(), HomeActivity.class);
+                        in = new Intent(getBaseContext(), ProfileActivity.class);
                         startActivity(in);
                         overridePendingTransition(0, 0);
                         finish();

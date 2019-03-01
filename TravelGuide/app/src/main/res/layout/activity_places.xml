@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.PlacesActivity"
-    android:background="@color/white">
+    android:background="@color/colorBackground">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_view"

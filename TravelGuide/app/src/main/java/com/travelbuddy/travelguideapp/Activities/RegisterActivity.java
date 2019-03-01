@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,19 +13,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.travelbuddy.travelguideapp.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private static final String TAG = "RRRR";
     private TextView log;
     private EditText userEmail, userPassword, userPassword2, userName;
     private ProgressBar loadingProgrss;
     private Button regBtn;
     Intent home;
-
+    private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         regBtn = (Button) findViewById(R.id.signup_btn);
         loadingProgrss.setVisibility(View.INVISIBLE);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         log = (TextView) findViewById(R.id.logLink);
         log.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +83,21 @@ public class RegisterActivity extends AppCompatActivity {
 
                     //All Set GO FOR Authentication FiREBASE
                     CreateUserAccount(email,name,password);
-
+//                    String uid = mAuth.getCurrentUser().getUid();
+//                    db.collection("Users").document(uid)
+//                            .set()
+//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+//                                }
+//                            })
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    Log.w(TAG, "Error writing document", e);
+//                                }
+//                            });
                 }
             }
         });
@@ -98,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //Account Created
                             showMessage("Account Created");
                             //After Account Creation we need to update his profile picture
-//                            updateUserInfo(name,pickedImgUri,mAuth.getCurrentUser());
+                            //updateUserInfo(name,pickedImgUri,mAuth.getCurrentUser());
                             changeActivity();
                         }
                         else{

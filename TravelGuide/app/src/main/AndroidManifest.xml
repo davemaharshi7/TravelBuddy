@@ -61,12 +61,13 @@
             android:name=".Activities.SearchSpinnerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".Activities.BottomNavigationActivity"
-            />
-        <activity android:name=".PlaceDetailsActivity"
+        <activity
+            android:name=".Activities.SeparatePlaceDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".Activities.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

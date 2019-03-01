@@ -18,7 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.travelbuddy.travelguideapp.Adapter.CityAdapter;
 import com.travelbuddy.travelguideapp.Models.Place;
-import com.travelbuddy.travelguideapp.PlaceDetailsActivity;
 import com.travelbuddy.travelguideapp.R;
 
 public class PlacesActivity extends BaseActivity {
@@ -74,7 +73,7 @@ public class PlacesActivity extends BaseActivity {
                 Place place=documentSnapshot.toObject(Place.class);
                 String id = documentSnapshot.getId();
                 String path = documentSnapshot.getReference().getPath();
-                Intent i = new Intent(getApplicationContext(),PlaceDetailsActivity.class);
+                Intent i = new Intent(getApplicationContext(),SeparatePlaceDetailsActivity.class);
                     i.putExtra("placeID",id);
                     i.putExtra("cityID",item);
                 startActivity(i);
