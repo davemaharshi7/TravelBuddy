@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.SearchCityActivity"
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
+
+    <SearchView
+        android:id="@+id/searchID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search City"
+        app:defaultQueryHint="Search City">
+
+        <requestFocus />
+    </SearchView>
+    <ListView
+        android:id="@+id/ListView_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+</LinearLayout>

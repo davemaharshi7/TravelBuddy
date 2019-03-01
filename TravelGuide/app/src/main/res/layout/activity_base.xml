@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottonNavBar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dynamicContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorBackground"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+    </android.support.constraint.ConstraintLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:baselineAligned="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/home_nav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/house"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Home"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/search_nav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/search"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Search"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/hire_nav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/compass"
+            android:gravity="center"
+            android:paddingLeft="2dp"
+            android:paddingTop="5dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="2dp"
+            android:text="Hire Guide"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/history_nav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/history"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="History"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/account_nav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/account"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Account"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp" />
+
+
+    </RadioGroup>
+</android.support.constraint.ConstraintLayout>
