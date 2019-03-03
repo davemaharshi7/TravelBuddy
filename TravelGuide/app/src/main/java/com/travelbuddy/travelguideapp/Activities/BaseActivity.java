@@ -46,7 +46,7 @@ public class BaseActivity extends AppCompatActivity {
                     case R.id.hire_nav:
                         Log.i("matching", "matching inside1 rate" + checkedId);
 
-                        in = new Intent(getBaseContext(),HomeActivity.class);
+                        in = new Intent(getBaseContext(),GuideHireActivity.class);
                         startActivity(in);
                         overridePendingTransition(0, 0);
                         finish();
