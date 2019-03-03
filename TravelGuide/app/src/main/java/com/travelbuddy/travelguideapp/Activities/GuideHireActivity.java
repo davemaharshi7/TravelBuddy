@@ -1,11 +1,14 @@
 package com.travelbuddy.travelguideapp.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,6 +28,7 @@ public class GuideHireActivity extends BaseActivity {
     FirebaseFirestore db=FirebaseFirestore.getInstance();
     RecyclerView mRecyclerView1;
     private GuideAdapter adapter;
+    SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class GuideHireActivity extends BaseActivity {
         bottonNavBar= (ConstraintLayout) findViewById(R.id.bottonNavBar);
         View wizard = getLayoutInflater().inflate(R.layout.activity_guide_hire, dynamicContent);
 
+        shared = getSharedPreferences("Travel_Data",Context.MODE_PRIVATE);
         RadioGroup rg=(RadioGroup)findViewById(R.id.radioGroup1);
         RadioButton rb=(RadioButton)findViewById(R.id.hire_nav);
         rb.setBackgroundColor(getResources().getColor(R.color.colorAccent));
@@ -48,9 +53,17 @@ public class GuideHireActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        String city_id =  shared.getString("city_id","ERROR");
+        if(TextUtils.equals(city_id,"ERROR"))
+        {
+            Toast.makeText(getApplicationContext(),"Please Select City First!!",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(GuideHireActivity.this,SearchSpinnerActivity.class);
+            startActivity(intent);
+            finish();
+        }
         Query query=FirebaseFirestore.getInstance()
                 .collection("Guides")
-                .whereEqualTo("Current_city","Ahmedabad").whereEqualTo("Available",true)
+                .whereEqualTo("Current_city",city_id).whereEqualTo("Available",true)
                 .limit(50);
         FirestoreRecyclerOptions<GuideDetails> options = new FirestoreRecyclerOptions.Builder<GuideDetails>()
                 .setQuery(query,GuideDetails.class)

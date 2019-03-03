@@ -73,7 +73,8 @@
             android:name=".Activities.GuideHireActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".Activities.PlanActivity"></activity>
+        <activity android:name=".Activities.PlanActivity" />
+        <activity android:name=".Activities.FillUserDetailsActivity"></activity>
     </application>
 
 </manifest>

@@ -54,6 +54,15 @@ public class PlanAdapter extends FirestoreRecyclerAdapter<Plan,PlanAdapter.plan_
             price=view.findViewById(R.id.plan_prices12);
             plan_places=view.findViewById(R.id.plan_places12);
             duration=view.findViewById(R.id.plan_description12);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION && listener !=null)
+                        listener.onItemClick(getSnapshots().getSnapshot(position), position);
+                }
+            });
         }
 
     }
