@@ -58,6 +58,7 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+//                user.getUid()
                 if (user == null) {
                     // user auth state is changed - user is null
                     // launch login activity

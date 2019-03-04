@@ -69,7 +69,13 @@
             android:name=".Activities.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".Activities.guide_dummy"></activity>
+        <activity
+            android:name=".Activities.GuideHireActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".Activities.PlanActivity" />
+        <activity android:name=".Activities.FillUserDetailsActivity" />
+        <activity android:name=".Activities.History"></activity>
     </application>
 
 </manifest>

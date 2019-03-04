@@ -1,6 +1,8 @@
 package com.travelbuddy.travelguideapp.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +35,7 @@ public class SearchSpinnerActivity extends BaseActivity {
     Hashtable<String,String> map;
     Button submit;
     Spinner searchSpinner;
-
+    SharedPreferences shared;
 
     @Override
     protected void onStart() {
@@ -75,6 +77,7 @@ public class SearchSpinnerActivity extends BaseActivity {
         View wizard = getLayoutInflater().inflate(R.layout.activity_search_spinner,dynamicContent);
        // dynamicContent.addView(wizard);
 
+        shared = getSharedPreferences("Travel_Data", Context.MODE_PRIVATE);
 
         //get the reference of RadioGroup.
         RadioGroup rg=(RadioGroup)findViewById(R.id.radioGroup1);
@@ -97,6 +100,9 @@ public class SearchSpinnerActivity extends BaseActivity {
                 }
                 else {
                     String cityID = map.get(cityName);
+                    SharedPreferences.Editor editor = shared.edit();
+                    editor.putString("city_id",cityID);
+                    editor.commit();
                     Intent i = new Intent(getApplicationContext(), PlacesActivity.class);
                     i.putExtra("cityID", cityID);
                     startActivity(i);
