@@ -18,8 +18,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.travelbuddy.travelguideapp.Models.UserRegister;
 import com.travelbuddy.travelguideapp.R;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -119,6 +125,32 @@ public class RegisterActivity extends AppCompatActivity {
                             showMessage("Account Created");
                             //After Account Creation we need to update his profile picture
                             //updateUserInfo(name,pickedImgUri,mAuth.getCurrentUser());
+
+                            FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+                            //Toast.makeText(getApplicationContext(),"" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+                            String uid = currentFirebaseUser.getUid();
+//                            String uid = mAuth.getCurrentUser().getUid();
+                            final String sha_password = getSHA(password);
+                            UserRegister u = new UserRegister(name,email,sha_password);
+                            db.collection("Users").document(uid)
+                                    .set(u)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                                            showMessage("USer Registerd");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error writing document", e);
+                                            showMessage("ERROR in writing t USer Document");
+                                        }
+                                    });
+
+
+
                             changeActivity();
                         }
                         else{
@@ -146,4 +178,39 @@ public class RegisterActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),message,Toast
                 .LENGTH_LONG).show();
     }
+
+    public String getSHA(String input) {
+
+        try {
+
+            // Static getInstance method is called with hashing SHA
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+            // digest() method called
+            // to calculate message digest of an input
+            // and return array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+
+            return hashtext;
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            System.out.println("Exception thrown"
+                    + " for incorrect algorithm: " + e);
+
+            return null;
+        }
+    }
+
 }
