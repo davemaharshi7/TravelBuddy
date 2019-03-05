@@ -19,18 +19,27 @@ public class HistoryDetails {
     private Long u_contact;
     private String u_comments;
     private Long u_persons;
+    private String u_id;
 
     public HistoryDetails()
     {}
 
-    public HistoryDetails(String u_name, String u_address, Long u_contact, String u_comments, Long u_persons) {
+    public HistoryDetails(String u_id,String u_name, String u_address, Long u_contact, String u_comments, Long u_persons) {
         this.u_name = u_name;
+        this.u_id=u_id;
         this.u_address = u_address;
         this.u_contact = u_contact;
         this.u_comments = u_comments;
         this.u_persons = u_persons;
     }
 
+    public String getU_id() {
+        return u_id;
+    }
+
+    public void setU_id(String u_id) {
+        this.u_id = u_id;
+    }
 
     public DocumentReference getGuideDocRef() {
         return guideDocRef;

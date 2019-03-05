@@ -1,6 +1,8 @@
 package com.travelbuddy.travelguideapp.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +39,8 @@ public class RegisterActivity extends AppCompatActivity {
     Intent home;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    SharedPreferences shared;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         home = new Intent(this,HomeActivity.class);
+        shared = getSharedPreferences("Travel_Data", Context.MODE_PRIVATE);
 
 
         regBtn.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +135,9 @@ public class RegisterActivity extends AppCompatActivity {
                             //Toast.makeText(getApplicationContext(),"" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
                             String uid = currentFirebaseUser.getUid();
 //                            String uid = mAuth.getCurrentUser().getUid();
+                            SharedPreferences.Editor editor = shared.edit();
+                            editor.putString("user_id",uid);
+                            editor.commit();
                             final String sha_password = getSHA(password);
                             UserRegister u = new UserRegister(name,email,sha_password);
                             db.collection("Users").document(uid)

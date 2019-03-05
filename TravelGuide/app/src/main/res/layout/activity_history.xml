@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Activities.History">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mRecyclerView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
 </android.support.constraint.ConstraintLayout>

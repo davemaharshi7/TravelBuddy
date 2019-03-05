@@ -1,6 +1,8 @@
 package com.travelbuddy.travelguideapp.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Intent home;
     private TextView reg,forgetPass;
+    SharedPreferences shared;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
+        shared = getSharedPreferences("Travel_Data", Context.MODE_PRIVATE);
 
         login = (Button) findViewById(R.id.loginBtn);
         forgetPass = (TextView) findViewById(R.id.forgetPass);
@@ -93,7 +98,15 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     progressBar.setVisibility(View.INVISIBLE);
                     login.setVisibility(View.VISIBLE);
+                    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+                    //Toast.makeText(getApplicationContext(),"" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+                    String uid = currentFirebaseUser.getUid();
+//                            String uid = mAuth.getCurrentUser().getUid();
+                    SharedPreferences.Editor editor = shared.edit();
+                    editor.putString("user_id",uid);
+                    editor.commit();
                     changeActivity();
+
                 }else {
                     showMessage("Login Error Occured : " + task.getException().getMessage());
                     progressBar.setVisibility(View.INVISIBLE);

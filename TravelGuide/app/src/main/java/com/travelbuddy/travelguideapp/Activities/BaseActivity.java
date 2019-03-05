@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity {
                         break;
                     case R.id.history_nav:
                         Log.i("matching", "matching inside1 listing" + checkedId);
-                        in = new Intent(getBaseContext(), HomeActivity.class);
+                        in = new Intent(getBaseContext(), History.class);
                         startActivity(in);
                         overridePendingTransition(0, 0);
                         finish();

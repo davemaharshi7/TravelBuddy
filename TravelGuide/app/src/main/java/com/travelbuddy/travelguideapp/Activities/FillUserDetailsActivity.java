@@ -3,9 +3,7 @@ package com.travelbuddy.travelguideapp.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,22 +14,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.travelbuddy.travelguideapp.Models.GuideDetails;
 import com.travelbuddy.travelguideapp.Models.HistoryDetails;
 import com.travelbuddy.travelguideapp.Models.Plan;
 import com.travelbuddy.travelguideapp.R;
 
-import java.sql.Time;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +34,7 @@ public class FillUserDetailsActivity extends BaseActivity {
     EditText u_comments;
     EditText u_persons;
     String plan_id;
-    String guide_id;
+    String guide_id,uid;
     String user_name;
     Long contact;
     String address;
@@ -65,7 +55,7 @@ public class FillUserDetailsActivity extends BaseActivity {
         bottonNavBar= (ConstraintLayout) findViewById(R.id.bottonNavBar);
         View wizard = getLayoutInflater().inflate(R.layout.activity_fill_user_details, dynamicContent);
 
-        u_name=findViewById(R.id.u_name);
+        u_name=findViewById(R.id.user_name);
         u_persons=findViewById(R.id.u_persons);
         u_address=findViewById(R.id.u_address);
         u_comments=findViewById(R.id.u_comments);
@@ -78,7 +68,8 @@ public class FillUserDetailsActivity extends BaseActivity {
         rb.setTextColor(getResources().getColor(R.color.white));
         plan_id=getIntent().getStringExtra("plan_id");
         guide_id =  shared.getString("guide_id","ERROR");
-                    //shared.getString("")Add user Id
+        uid = shared.getString("user_id","ERROR");
+        //shared.getString("")Add user Id
         if(TextUtils.equals(guide_id,"ERROR"))
         {
             Toast.makeText(getApplicationContext(),"Please Select Guide First!!",Toast.LENGTH_SHORT).show();
@@ -113,6 +104,7 @@ public class FillUserDetailsActivity extends BaseActivity {
         //Plan pd;
         docRef = db.collection("Guides").document(guide_id).collection("Plans").document(plan_id);
         hd.setPlanDocRef(docRef);
+        hd.setU_id(uid);
         hd.setU_name(user_name);
         hd.setU_address(address);
         hd.setU_persons(persons);
@@ -139,9 +131,6 @@ public class FillUserDetailsActivity extends BaseActivity {
 //            // [START_EXCLUDE]
 //        });
         db.collection("History").add(hd);
-
-
-
-        Toast.makeText(FillUserDetailsActivity.this,"Your trip is calculated",Toast.LENGTH_SHORT);
+        Toast.makeText(FillUserDetailsActivity.this,"Your trip is calculated",Toast.LENGTH_SHORT).show();
     }
 }
