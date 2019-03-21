@@ -51,7 +51,7 @@ public class SelectionLoginMethod extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null){
             //user is already connected so we need to redirect to home page
-            Intent i = new Intent(getApplicationContext(),BaseActivity.class);
+            Intent i = new Intent(getApplicationContext(),HomeActivity.class);
             startActivity(i);
             finish();
             return;

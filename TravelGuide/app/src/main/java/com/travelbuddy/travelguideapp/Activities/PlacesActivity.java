@@ -25,6 +25,7 @@ public class PlacesActivity extends BaseActivity {
     ConstraintLayout dynamicContent,bottonNavBar;
     RecyclerView recyclerView;
     FirebaseFirestore db;
+    TextView emptyView;
     public CollectionReference cityref ;
     private CityAdapter adapter;
 
@@ -40,7 +41,7 @@ public class PlacesActivity extends BaseActivity {
         //Firestore
         db = FirebaseFirestore.getInstance();
         cityref = db.collection("Cities");
-
+        emptyView = findViewById(R.id.empty_view);
         //get the reference of RadioGroup.
         RadioGroup rg=(RadioGroup)findViewById(R.id.radioGroup1);
         RadioButton rb=(RadioButton)findViewById(R.id.search_nav);
@@ -81,7 +82,6 @@ public class PlacesActivity extends BaseActivity {
             }
         });
         adapter.startListening();
-
 
 
 

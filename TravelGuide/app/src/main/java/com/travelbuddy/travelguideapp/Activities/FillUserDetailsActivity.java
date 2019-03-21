@@ -3,6 +3,7 @@ package com.travelbuddy.travelguideapp.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,13 +11,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.functions.FirebaseFunctions;
 import com.travelbuddy.travelguideapp.Models.GuideDetails;
 import com.travelbuddy.travelguideapp.Models.HistoryDetails;
 import com.travelbuddy.travelguideapp.Models.Plan;
@@ -27,20 +35,24 @@ import java.util.Map;
 
 public class FillUserDetailsActivity extends BaseActivity {
     ConstraintLayout dynamicContent,bottonNavBar;
+    FirebaseFunctions mFunctions;
     SharedPreferences shared;
     EditText u_name;
     EditText u_contact;
     EditText u_address;
     EditText u_comments;
     EditText u_persons;
+    Button u_submit;
     String plan_id;
     String guide_id,uid;
     String user_name;
     Long contact;
     String address;
     String comments;
+    FirebaseUser currentFirebaseUser;
     Long persons;
     Button update_history;
+    private ProgressBar pg;
     FirebaseFirestore db=FirebaseFirestore.getInstance();
     public GuideDetails gd = new GuideDetails();
     public Plan pd = new Plan();
@@ -59,8 +71,11 @@ public class FillUserDetailsActivity extends BaseActivity {
         u_persons=findViewById(R.id.u_persons);
         u_address=findViewById(R.id.u_address);
         u_comments=findViewById(R.id.u_comments);
+        u_submit = findViewById(R.id.u_submit);
         u_contact=findViewById(R.id.u_contact);
+        pg = findViewById(R.id.progressBar3);
         update_history=(Button)findViewById(R.id.u_submit);
+        pg.setVisibility(View.INVISIBLE);
         shared = getSharedPreferences("Travel_Data",Context.MODE_PRIVATE);
         RadioGroup rg=(RadioGroup)findViewById(R.id.radioGroup1);
         RadioButton rb=(RadioButton)findViewById(R.id.hire_nav);
@@ -82,6 +97,8 @@ public class FillUserDetailsActivity extends BaseActivity {
         editor.commit();
 
         Log.d("MMMM",guide_id+"  "+plan_id);
+        mFunctions = FirebaseFunctions.getInstance();
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
     }
 
@@ -89,6 +106,8 @@ public class FillUserDetailsActivity extends BaseActivity {
     public void UpdateHistory(View view)
     {
         //HistoryDetails hd;
+        u_submit.setVisibility(View.INVISIBLE);
+        pg.setVisibility(View.VISIBLE);
         user_name=u_name.getText().toString();
         contact= Long.parseLong(u_contact.getText().toString());
         address=u_address.getText().toString();
@@ -131,6 +150,31 @@ public class FillUserDetailsActivity extends BaseActivity {
 //            // [START_EXCLUDE]
 //        });
         db.collection("History").add(hd);
-        Toast.makeText(FillUserDetailsActivity.this,"Your trip is calculated",Toast.LENGTH_SHORT).show();
+        String email = currentFirebaseUser.getEmail();
+        Log.d("EMAIL",email);
+
+//        Toast.makeText(FillUserDetailsActivity.this,"Your trip is calculated",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
+        intent.putExtra("emailUser",email);
+        intent.putExtra("username",user_name);
+        intent.putExtra("persons",persons.toString());
+        intent.putExtra("contact",contact.toString());
+
+        startActivity(intent);
+        finish();
     }
+//    private Task addMessage(String emailUser,String user_name,String no_persons,String contact) {
+//        // Create the arguments to the callable function.
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("emailUser", emailUser);
+//        data.put("username", user_name);
+//        data.put("persons", no_persons);
+//        data.put("contact", contact);
+//
+//        data.put("push", true);
+//
+//        return mFunctions
+//                .getHttpsCallable("sendEmailToUser")
+//                .call(data);
+//    }
 }
