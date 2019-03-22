@@ -1,6 +1,8 @@
 package com.travelbuddy.travelguideapp.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -21,10 +23,11 @@ import com.travelbuddy.travelguideapp.R;
 public class ProfileActivity extends BaseActivity {
     ConstraintLayout dynamicContent,bottonNavBar;
     private TextView name,email;
-    private Button logout,verifyEmail,deleteAcc,changePasswoord;
+    private Button logout,verifyEmail,deleteAcc,changePasswoord,aboutus;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private TextView bool;
+    SharedPreferences shared;
 
 
     @Override
@@ -46,10 +49,20 @@ public class ProfileActivity extends BaseActivity {
         name = (TextView) findViewById(R.id.nameField);
         email = (TextView) findViewById(R.id.emailField);
         changePasswoord = (Button) findViewById(R.id.changePassword);
+        aboutus = findViewById(R.id.aboutUsButton);
 
+        aboutus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),AboutUsActivity.class);
+                startActivity(i);
+            }
+        });
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
-
+        shared = getSharedPreferences("Travel_Data", Context.MODE_PRIVATE);
+        String user_name = shared.getString("user_name", null);
+        name.setText(user_name);
 
         //get current user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -128,6 +141,9 @@ public class ProfileActivity extends BaseActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = shared.edit();
+                editor.clear();
+                editor.commit();
                 auth.signOut();
             }
         });

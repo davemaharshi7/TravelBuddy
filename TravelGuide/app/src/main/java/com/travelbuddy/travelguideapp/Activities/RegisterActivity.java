@@ -137,6 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                            String uid = mAuth.getCurrentUser().getUid();
                             SharedPreferences.Editor editor = shared.edit();
                             editor.putString("user_id",uid);
+                            editor.putString("user_name",name);
                             editor.commit();
                             final String sha_password = getSHA(password);
                             UserRegister u = new UserRegister(name,email,sha_password);
@@ -146,14 +147,14 @@ public class RegisterActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d(TAG, "DocumentSnapshot successfully written!");
-                                            showMessage("USer Registerd");
+                                            showMessage("User Registerd");
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Log.w(TAG, "Error writing document", e);
-                                            showMessage("ERROR in writing t USer Document");
+                                            showMessage("ERROR in writing USer Document");
                                         }
                                     });
 

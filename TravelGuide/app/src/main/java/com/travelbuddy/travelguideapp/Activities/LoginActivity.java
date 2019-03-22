@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.travelbuddy.travelguideapp.Models.TravelBuddyUser;
 import com.travelbuddy.travelguideapp.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -27,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private Intent home;
+    FirebaseFirestore db;
     private TextView reg,forgetPass;
     SharedPreferences shared;
 
@@ -53,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         // Initialize Firebase Auth Variable
         mAuth = FirebaseAuth.getInstance();
-
+        db = FirebaseFirestore.getInstance();
         home = new Intent(this,HomeActivity.class);
 //        if (mAuth.getCurrentUser() != null) {
 //            // User is signed in (getCurrentUser() will be null if not signed in)
@@ -105,6 +112,18 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = shared.edit();
                     editor.putString("user_id",uid);
                     editor.commit();
+                    DocumentReference docRef = db.collection("Users").document(uid);
+                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            TravelBuddyUser user = documentSnapshot.toObject(TravelBuddyUser.class);
+                            SharedPreferences.Editor editor = shared.edit();
+                            Log.d("USER",user.toString());
+                            editor.putString("user_name",user.getUser_name());
+                            editor.commit();
+                        }
+                    });
+
                     changeActivity();
 
                 }else {
@@ -137,6 +156,7 @@ public class LoginActivity extends AppCompatActivity {
             changeActivity();
 
         }
+
 
     }
 }
