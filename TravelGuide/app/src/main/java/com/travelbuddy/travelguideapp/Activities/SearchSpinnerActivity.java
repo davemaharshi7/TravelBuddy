@@ -106,9 +106,11 @@ public class SearchSpinnerActivity extends BaseActivity {
                     String cityID = map.get(searchSpinner.getSelectedItem().toString());
                     SharedPreferences.Editor editor = shared.edit();
                     editor.putString("city_id",cityID);
+                    editor.putString("cityName",searchSpinner.getSelectedItem().toString());
                     editor.commit();
                     Intent i = new Intent(getApplicationContext(), PlacesActivity.class);
                     i.putExtra("cityID", cityID);
+//                    i.putExtra("cityName",searchSpinner.getSelectedItem().toString());
                     startActivity(i);
                 }
             }

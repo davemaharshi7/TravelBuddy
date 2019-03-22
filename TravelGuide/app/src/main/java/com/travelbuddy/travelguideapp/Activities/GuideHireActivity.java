@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -27,6 +28,7 @@ public class GuideHireActivity extends BaseActivity {
     ConstraintLayout dynamicContent,bottonNavBar;
     FirebaseFirestore db=FirebaseFirestore.getInstance();
     RecyclerView mRecyclerView1;
+    TextView cityName;
     private GuideAdapter adapter;
     SharedPreferences shared;
 
@@ -45,8 +47,7 @@ public class GuideHireActivity extends BaseActivity {
         rb.setTextColor(getResources().getColor(R.color.white));
         mRecyclerView1=findViewById(R.id.mRecyclerView1);
         mRecyclerView1.setLayoutManager(new LinearLayoutManager(this));
-
-
+        cityName = findViewById(R.id.cityData);
 
     }
 
@@ -54,6 +55,8 @@ public class GuideHireActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         String city_id =  shared.getString("city_id","ERROR");
+        String cName = shared.getString("cityName","ERROR");
+        cityName.setText("Guides of "+cName+" city:");
         if(TextUtils.equals(city_id,"ERROR"))
         {
             Toast.makeText(getApplicationContext(),"Please Select City First!!",Toast.LENGTH_SHORT).show();
