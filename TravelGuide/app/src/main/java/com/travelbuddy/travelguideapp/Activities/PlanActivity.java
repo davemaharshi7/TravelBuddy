@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -28,7 +30,8 @@ public class PlanActivity extends BaseActivity {
 
     FirebaseFirestore db=FirebaseFirestore.getInstance();
     RecyclerView mRecyclerview2;
-    String guide_id;
+    String guide_id,guide_name;
+    TextView guideData;
     SharedPreferences shared;
     private PlanAdapter adapter;
     @Override
@@ -47,7 +50,10 @@ public class PlanActivity extends BaseActivity {
         shared = getSharedPreferences("Travel_Data",Context.MODE_PRIVATE);
         mRecyclerview2=findViewById(R.id.mRecyclerView2);
         mRecyclerview2.setLayoutManager(new LinearLayoutManager(this));
-        guide_id=getIntent().getStringExtra("guide_id");
+        guide_id = getIntent().getStringExtra("guide_id");
+        guide_name = getIntent().getStringExtra("guide_name");
+        guideData =findViewById(R.id.guideData);
+        guideData.setText("Plans of "+guide_name+":");
         SharedPreferences.Editor editor = shared.edit();
         editor.putString("guide_id",guide_id);
         editor.commit();

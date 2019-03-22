@@ -83,6 +83,7 @@ public class GuideHireActivity extends BaseActivity {
                   //    "Position: " + position + "  ID:  " + id + "  \nPath " + path, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(GuideHireActivity.this,PlanActivity.class);
                 i.putExtra("guide_id",id);
+                i.putExtra("guide_name",guide.getGuide_name());
                 //i.putExtra("city",value);
                 //i.putExtra("Value2", "Simple Tutorial");
                 // Set the request code to any code you like, you can identify the
