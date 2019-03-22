@@ -62,7 +62,10 @@ public class ForgetPassword extends AppCompatActivity {
                                     Toast.makeText(ForgetPassword.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
                                     changeActivity();
                                 } else {
-                                    Toast.makeText(ForgetPassword.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ForgetPassword.this, "Failed to send reset email!Email may not be registered with our System", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+                                    startActivity(i);
+                                    finish();
                                 }
 
                                 progressBar.setVisibility(View.GONE);
