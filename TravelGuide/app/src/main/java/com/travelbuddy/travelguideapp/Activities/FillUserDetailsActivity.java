@@ -106,6 +106,39 @@ public class FillUserDetailsActivity extends BaseActivity {
     public void UpdateHistory(View view)
     {
         //HistoryDetails hd;
+
+
+        if(u_name.getText().toString().isEmpty())
+        {
+            u_name.setError("Name cannot be Empty");
+            u_name.requestFocus();
+            return;
+        }
+        if(u_contact.getText().toString().isEmpty() ||
+            u_contact.getText().toString().length() < 10 )
+        {
+            u_contact.setError("Contact number either Empty or less than 10 digits!");
+            u_contact.requestFocus();
+            return;
+        }
+        if(u_address.getText().toString().isEmpty())
+        {
+            u_address.setError("Address Can not be Empty");
+            u_address.requestFocus();
+            return;
+        }
+        if(u_persons.getText().toString().isEmpty())
+        {
+            u_persons.setError("Please Enter Number of Persons Travelling to trip");
+            u_persons.requestFocus();
+            return;
+        }
+        if(u_comments.getText().toString().isEmpty())
+        {
+            u_comments.setError("Comment cannot be Empty");
+            u_comments.requestFocus();
+            return;
+        }
         u_submit.setVisibility(View.INVISIBLE);
         pg.setVisibility(View.VISIBLE);
         user_name=u_name.getText().toString();
