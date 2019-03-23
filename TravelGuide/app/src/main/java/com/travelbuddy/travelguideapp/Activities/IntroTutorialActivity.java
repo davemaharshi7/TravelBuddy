@@ -24,7 +24,7 @@ public class IntroTutorialActivity extends AppCompatActivity {
     private SliderAdapter sliderAdapter;
 
     private Button mBack;
-    private Button mNext;
+    private Button mNext,skip;
     private int mCurrentPage;
     //View view;
 
@@ -48,7 +48,7 @@ public class IntroTutorialActivity extends AppCompatActivity {
 //
 //        }
 
-
+        skip = findViewById(R.id.skipbtn);
         mSlideViewPager = (ViewPager) findViewById(R.id.SlideLayout);
         mDotLayout = (LinearLayout) findViewById(R.id.Linear);
 
@@ -67,7 +67,12 @@ public class IntroTutorialActivity extends AppCompatActivity {
                 }
             }
         });
-
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeActivity();
+            }
+        });
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
