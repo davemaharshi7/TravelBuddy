@@ -134,10 +134,9 @@ public class ProfileActivity extends BaseActivity {
         changePasswoord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent p = new Intent(ProfileActivity.this, ForgetPassword.class);
+                Intent p = new Intent(ProfileActivity.this, ChangePasswordActivity.class);
                 startActivity(p);
-                finish();
-                return;
+
             }
         });
         //to Logout
