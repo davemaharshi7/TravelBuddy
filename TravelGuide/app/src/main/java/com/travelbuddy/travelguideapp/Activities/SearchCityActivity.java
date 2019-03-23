@@ -16,6 +16,8 @@ import android.widget.SearchView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,6 +38,15 @@ public class SearchCityActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseUser checkUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(checkUser == null){
+            //user is already connected so we need to redirect to home page
+//            changeActivity();
+            Intent SelectionPage = new Intent(getApplicationContext(),SelectionLoginMethod.class);
+            startActivity(SelectionPage);
+            finish();
+            return;
+        }
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Cities")
                 .get()

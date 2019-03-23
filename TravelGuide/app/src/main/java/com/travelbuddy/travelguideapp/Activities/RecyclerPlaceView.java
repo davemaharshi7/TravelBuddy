@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -60,6 +62,13 @@ public class RecyclerPlaceView extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //adapter.startListening();
+        FirebaseUser checkUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(checkUser == null){
+            Intent SelectionPage = new Intent(getApplicationContext(),SelectionLoginMethod.class);
+            startActivity(SelectionPage);
+            finish();
+            return;
+        }
     }
 
     @Override

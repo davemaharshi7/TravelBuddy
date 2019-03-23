@@ -181,6 +181,15 @@ public class ProfileActivity extends BaseActivity {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
+        FirebaseUser checkUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(checkUser == null){
+            //user is already connected so we need to redirect to home page
+            //changeActivity();
+            Intent SelectionPage = new Intent(getApplicationContext(),SelectionLoginMethod.class);
+            startActivity(SelectionPage);
+            finish();
+            return;
+        }
     }
 
     @Override

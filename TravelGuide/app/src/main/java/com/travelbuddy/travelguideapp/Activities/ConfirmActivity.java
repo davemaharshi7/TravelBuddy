@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 import com.travelbuddy.travelguideapp.R;
@@ -28,6 +30,19 @@ public class ConfirmActivity extends BaseActivity {
     private FirebaseFunctions mFunctions;
     ConstraintLayout dynamicContent,bottonNavBar;
     private Button home;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser checkUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(checkUser == null){
+            Intent SelectionPage = new Intent(getApplicationContext(),SelectionLoginMethod.class);
+            startActivity(SelectionPage);
+            finish();
+            return;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

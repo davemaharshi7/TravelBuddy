@@ -12,6 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,6 +30,18 @@ public class PlacesActivity extends BaseActivity {
     TextView emptyView;
     public CollectionReference cityref ;
     private CityAdapter adapter;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser checkUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(checkUser == null){
+            Intent SelectionPage = new Intent(getApplicationContext(),SelectionLoginMethod.class);
+            startActivity(SelectionPage);
+            finish();
+            return;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

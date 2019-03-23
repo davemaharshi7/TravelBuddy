@@ -15,6 +15,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.travelbuddy.travelguideapp.Adapter.HistoryAdapter;
@@ -50,7 +52,13 @@ public class History extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        FirebaseUser checkUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(checkUser == null){
+            Intent SelectionPage = new Intent(getApplicationContext(),SelectionLoginMethod.class);
+            startActivity(SelectionPage);
+            finish();
+            return;
+        }
         Query query=FirebaseFirestore.getInstance()
                 .collection("History")
                 .whereEqualTo("u_id",user_id)

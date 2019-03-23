@@ -196,18 +196,16 @@ public class FillUserDetailsActivity extends BaseActivity {
         startActivity(intent);
         finish();
     }
-//    private Task addMessage(String emailUser,String user_name,String no_persons,String contact) {
-//        // Create the arguments to the callable function.
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("emailUser", emailUser);
-//        data.put("username", user_name);
-//        data.put("persons", no_persons);
-//        data.put("contact", contact);
-//
-//        data.put("push", true);
-//
-//        return mFunctions
-//                .getHttpsCallable("sendEmailToUser")
-//                .call(data);
-//    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser checkUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(checkUser == null){
+            Intent SelectionPage = new Intent(getApplicationContext(),SelectionLoginMethod.class);
+            startActivity(SelectionPage);
+            finish();
+            return;
+        }
+    }
 }

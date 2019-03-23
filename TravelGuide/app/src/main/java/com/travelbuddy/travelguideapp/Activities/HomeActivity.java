@@ -1,11 +1,14 @@
 package com.travelbuddy.travelguideapp.Activities;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.travelbuddy.travelguideapp.R;
 
 public class HomeActivity extends BaseActivity {
@@ -31,5 +34,19 @@ public class HomeActivity extends BaseActivity {
 //        rb.setCompoundDrawablesWithIntrinsicBounds( 0,R.drawable, 0,0);
         rb.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         rb.setTextColor(getResources().getColor(R.color.white));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser checkUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(checkUser == null){
+            //user is already connected so we need to redirect to home page
+//            changeActivity();
+            Intent SelectionPage = new Intent(getApplicationContext(),SelectionLoginMethod.class);
+            startActivity(SelectionPage);
+            finish();
+            return;
+        }
     }
 }
