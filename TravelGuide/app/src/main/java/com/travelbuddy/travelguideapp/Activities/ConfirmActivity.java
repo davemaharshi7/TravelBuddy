@@ -1,6 +1,7 @@
 package com.travelbuddy.travelguideapp.Activities;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class ConfirmActivity extends BaseActivity {
     private FirebaseFunctions mFunctions;
     ConstraintLayout dynamicContent,bottonNavBar;
     private Button home;
+//    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onStart() {

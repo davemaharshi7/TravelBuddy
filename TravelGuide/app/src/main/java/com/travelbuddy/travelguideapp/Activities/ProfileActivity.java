@@ -1,12 +1,15 @@
 package com.travelbuddy.travelguideapp.Activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -28,7 +31,8 @@ public class ProfileActivity extends BaseActivity {
     private FirebaseAuth auth;
     private TextView bool;
     SharedPreferences shared;
-
+    boolean doubleBackToExitPressedOnce = false;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +69,14 @@ public class ProfileActivity extends BaseActivity {
         name.setText(user_name);
 
         //get current user
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+         user = FirebaseAuth.getInstance().getCurrentUser();
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
 //                user.getUid()
-                if (user == null) {
+                FirebaseUser user1 = firebaseAuth.getCurrentUser();
+                if (user1 == null) {
                     // user auth state is changed - user is null
                     // launch login activity
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
@@ -80,9 +84,9 @@ public class ProfileActivity extends BaseActivity {
                 } else {
 
 //                    name.setText(user.);
-                    email.setText(user.getEmail());
+                    email.setText(user1.getEmail());
 
-                    if (user.isEmailVerified()) {
+                    if (user1.isEmailVerified()) {
                         // user is verified, so you can finish this activity or send user to activity which you want.
                         bool.setText("Email Verified Successfully");
                         verifyEmail.setEnabled(false);
@@ -151,21 +155,8 @@ public class ProfileActivity extends BaseActivity {
         deleteAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null) {
-                    user.delete()
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        printMessage("Your profile is deleted:( Create a account now!");
-                                        startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
-                                        finish();
-                                    } else {
-                                        printMessage("Failed to delete your account!");
-                                    }
-                                }
-                            });
-                }
+                customDialog("Do you want to delete your Account Permanently","This action cannot be reverted.Once you delete your Account you will loose all you personal details", "cancelMethod","deleteUser");
+
             }
         });
 
@@ -191,12 +182,88 @@ public class ProfileActivity extends BaseActivity {
             return;
         }
     }
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
 
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
     @Override
     public void onStop() {
         super.onStop();
         if (authListener != null) {
             auth.removeAuthStateListener(authListener);
         }
+    }
+
+    public void customDialog(String title, String message, final String cancelMethod, final String okMethod){
+        final android.support.v7.app.AlertDialog.Builder builderSingle = new android.support.v7.app.AlertDialog.Builder(this);
+        builderSingle.setIcon(R.drawable.danger);
+        builderSingle.setTitle(title);
+        builderSingle.setMessage(message);
+
+        builderSingle.setNegativeButton(
+                "Cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("DIALOG", "onClick: Cancel Called.");
+                        if(cancelMethod.equals("cancelMethod")){
+                            cancelMethod1();
+                        }
+
+                    }
+                });
+
+        builderSingle.setPositiveButton(
+                "OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.d("DIALOG", "onClick: OK Called.");
+                        if(okMethod.equals("deleteUser")){
+                            deleteAccount();
+                        }
+                        else if(okMethod.equals("okMethod2")){
+                            //okMethod2();
+                        }
+                    }
+                });
+
+
+        builderSingle.show();
+    }
+
+    private void deleteAccount() {
+        if (user != null) {
+            user.delete()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                printMessage("Your profile is deleted:( Create a account now!");
+                                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                                finish();
+                            } else {
+                                printMessage("Failed to delete your account!");
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void cancelMethod1() {
     }
 }
