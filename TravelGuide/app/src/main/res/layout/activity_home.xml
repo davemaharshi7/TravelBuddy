@@ -5,27 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.HomeActivity"
-    android:background="@color/colorBackground">
+    android:background="@drawable/bannerimage">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:scaleType="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tour"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <TextView
-        android:id="@+id/tex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Explore the world with Travel Buddy"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 </android.support.constraint.ConstraintLayout>
