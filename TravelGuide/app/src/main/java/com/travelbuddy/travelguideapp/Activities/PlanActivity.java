@@ -94,8 +94,8 @@ public class PlanActivity extends BaseActivity {
                 Plan plan=documentSnapshot.toObject(Plan.class);
                 String id = documentSnapshot.getId();
                 String path = documentSnapshot.getReference().getPath();
-                Toast.makeText(PlanActivity.this,
-                    "Position: " + position + "  ID:  " + id + "  \nPath " + path, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(PlanActivity.this,
+//                    "Position: " + position + "  ID:  " + id + "  \nPath " + path, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(PlanActivity.this,FillUserDetailsActivity.class);
                 i.putExtra("plan_id",id);
                 //i.putExtra("city",value);

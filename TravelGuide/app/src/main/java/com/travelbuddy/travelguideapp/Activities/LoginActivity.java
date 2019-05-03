@@ -114,19 +114,42 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = shared.edit();
                     editor.putString("user_id",uid);
                     editor.commit();
+
+//                    TravelBuddyUser user = documentSnapshot.toObject(TravelBuddyUser.class);
+//                    SharedPreferences.Editor editor = shared.edit();
+//                    Log.d("USER",user.toString());
+//                    editor.putString("user_name",user.getUser_name());
+//                    editor.commit();
+
                     DocumentReference docRef = db.collection("Users").document(uid);
-                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            TravelBuddyUser user = documentSnapshot.toObject(TravelBuddyUser.class);
-                            SharedPreferences.Editor editor = shared.edit();
-                            Log.d("USER",user.toString());
-                            editor.putString("user_name",user.getUser_name());
-                            editor.commit();
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+//                                    Log.d("TEST", "DocumentSnapshot data: " + document.getData());
+                                    TravelBuddyUser user = document.toObject(TravelBuddyUser.class);
+                                    SharedPreferences.Editor editor = shared.edit();
+                                    Log.d("USER",user.toString());
+                                    editor.putString("user_name",user.getUser_name());
+                                    editor.commit();
+                                    changeActivity();
+
+                                } else {
+                                    Log.d("TEST", "No such document");
+                                    showMessage("You are not registered as User!");
+                                    mAuth.signOut();
+                                    Intent r = new Intent(getApplicationContext(),RegisterActivity.class);
+                                    startActivity(r);
+                                    finish();
+                                    return;
+                                }
+                            } else {
+                                Log.d("TEST", "get failed with ", task.getException());
+                            }
                         }
                     });
-
-                    changeActivity();
 
                 }else {
                     showMessage("Login Error Occured : " + task.getException().getMessage());

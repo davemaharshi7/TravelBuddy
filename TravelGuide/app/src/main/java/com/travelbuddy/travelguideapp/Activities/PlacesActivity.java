@@ -1,6 +1,8 @@
 package com.travelbuddy.travelguideapp.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +29,8 @@ public class PlacesActivity extends BaseActivity {
     ConstraintLayout dynamicContent,bottonNavBar;
     RecyclerView recyclerView;
     FirebaseFirestore db;
-    TextView emptyView;
+    TextView emptyView,cityName;
+    SharedPreferences sharedPreferences;
     public CollectionReference cityref ;
     private CityAdapter adapter;
 
@@ -57,14 +60,17 @@ public class PlacesActivity extends BaseActivity {
         cityref = db.collection("Cities");
         emptyView = findViewById(R.id.empty_view);
         //get the reference of RadioGroup.
+        cityName = findViewById(R.id.cityName);
+
         RadioGroup rg=(RadioGroup)findViewById(R.id.radioGroup1);
         RadioButton rb=(RadioButton)findViewById(R.id.search_nav);
         rb.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         rb.setTextColor(getResources().getColor(R.color.white));
 
 
-
-
+        sharedPreferences = getSharedPreferences("Travel_Data", Context.MODE_PRIVATE);
+        String c_name = sharedPreferences.getString("cityName","");
+        cityName.setText("Places of "+c_name+" city:");
         final String item = getIntent().getStringExtra("cityID");
         Log.i("EEEE",item);
         recyclerView = (RecyclerView) findViewById(R.id.rv_view);
