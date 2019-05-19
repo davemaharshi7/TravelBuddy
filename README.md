@@ -17,7 +17,7 @@ Firstly user signups or logins to TravelBuddy App, reaches to **Home page** of t
 
 **Check out TravelBuddy in running demo:**
 
-link - https://youtu.be/3H5q4iRQ_RY
+link - https://youtu.be/53p11bPE_6k
 
 **Check out the Guide Appliction associated to TravelBuddy:**
 
