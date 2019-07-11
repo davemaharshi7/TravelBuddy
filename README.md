@@ -13,7 +13,7 @@ Firstly user signups or logins to TravelBuddy App, reaches to **Home page** of t
 5. Hire guide in a particular city by selecting proper plan provided by Guides.
 6. Displaying all the past completed trips to user.
 7. Account management( features like Verify Email, Change password, Deactivate account, Logout etc)
-8. Receiving upon events like Registering new user, Hiring a guide etc.
+8. Receiving email upon events like Registering new user, Hiring a guide etc.
 
 **Check out TravelBuddy in running demo:**
 
